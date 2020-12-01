@@ -1,4 +1,16 @@
-
+chrome.runtime.onInstalled.addListener(details => {
+    if (details.reason == 'install') {
+        chrome.storage.sync.set({
+            data: {},
+            bckp: {}
+        })
+    } else if (details.reason == 'update') {
+        chrome.storage.sync.get(['data'], resp => {
+            console.log(resp.data)
+            // chrome.storage.sync.set({ data: {} })
+        })
+    }
+})
 
 // handle open option page request from "expand"
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -14,3 +26,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         })
     }
 })
+
+// const saveChanges = () => {
+//     chrome.storage.sync.get(['data', 'bckp'], resp => {
+//         console.log(resp)
+//         // chrome.storage.sync.set({ 'data': {} })
+//     })
+// }
